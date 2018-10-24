@@ -1,25 +1,43 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
+import Header from './components/Header'
+import Card from './components/Card'
+
 class App extends Component {
+  constructor() {
+    super()
+    this.state = {
+      images: [],
+      quotes: []
+    }
+  }
+
+  componentDidMount(){
+    fetch('https://lit-peak-62946.herokuapp.com/insta-images')
+      .then(response => response.json())
+      .then(response => {
+          this.setState({
+            images: response.images
+          })
+      })
+    fetch('https://lit-peak-62946.herokuapp.com/insta-quotes')
+      .then(response => response.json())
+      .then(response => {
+          this.setState({
+            quotes: response.quotes
+          })
+      })
+  }
+
   render() {
+
+    var pictures = this.state.images.map(image => <Card quotes={this.state.quotes} image={image.img} />)
+
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <Header />
+        {pictures}
       </div>
     );
   }

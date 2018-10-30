@@ -4,7 +4,7 @@ import { Card } from 'semantic-ui-react'
 const CharacterCard = (props) => {
     return props.data.map(character => {
         return(
-            <Card key={character.id}>
+            <Card onClick={() => props.handleClick(character.films[0])} key={character.id}>
                 <Card.Content header={character.name} />
                 <Card.Content description={'Age: ' + character.age} />
                 <Card.Content description={'Eye Color: ' + character.eye_color} />
